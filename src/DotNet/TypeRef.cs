@@ -1,25 +1,4 @@
-/*
-    Copyright (C) 2012-2014 de4dot@gmail.com
-
-    Permission is hereby granted, free of charge, to any person obtaining
-    a copy of this software and associated documentation files (the
-    "Software"), to deal in the Software without restriction, including
-    without limitation the rights to use, copy, modify, merge, publish,
-    distribute, sublicense, and/or sell copies of the Software, and to
-    permit persons to whom the Software is furnished to do so, subject to
-    the following conditions:
-
-    The above copyright notice and this permission notice shall be
-    included in all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+// dnlib: See LICENSE.txt for more info
 
 ﻿using System;
 using System.Threading;
@@ -319,9 +298,18 @@ namespace dnlib.DotNet {
 		/// </summary>
 		/// <returns>A <see cref="TypeDef"/> instance or <c>null</c> if it couldn't be resolved</returns>
 		public TypeDef Resolve() {
+			return Resolve(null);
+		}
+
+		/// <summary>
+		/// Resolves the type
+		/// </summary>
+		/// <param name="sourceModule">The module that needs to resolve the type or <c>null</c></param>
+		/// <returns>A <see cref="TypeDef"/> instance or <c>null</c> if it couldn't be resolved</returns>
+		public TypeDef Resolve(ModuleDef sourceModule) {
 			if (module == null)
 				return null;
-			return module.Context.Resolver.Resolve(this);
+			return module.Context.Resolver.Resolve(this, sourceModule);
 		}
 
 		/// <summary>
@@ -330,7 +318,17 @@ namespace dnlib.DotNet {
 		/// <returns>A <see cref="TypeDef"/> instance</returns>
 		/// <exception cref="TypeResolveException">If the type couldn't be resolved</exception>
 		public TypeDef ResolveThrow() {
-			var type = Resolve();
+			return ResolveThrow(null);
+		}
+
+		/// <summary>
+		/// Resolves the type
+		/// </summary>
+		/// <param name="sourceModule">The module that needs to resolve the type or <c>null</c></param>
+		/// <returns>A <see cref="TypeDef"/> instance</returns>
+		/// <exception cref="TypeResolveException">If the type couldn't be resolved</exception>
+		public TypeDef ResolveThrow(ModuleDef sourceModule) {
+			var type = Resolve(sourceModule);
 			if (type != null)
 				return type;
 			throw new TypeResolveException(string.Format("Could not resolve type: {0} ({1})", this, DefinitionAssembly));
