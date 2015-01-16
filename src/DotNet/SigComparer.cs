@@ -595,6 +595,7 @@ namespace dnlib.DotNet {
 		SigComparerOptions options;
 		GenericArguments genericArguments;
 		ModuleDef sourceModule;
+        WinRT.SigComparer compareWinRT;
 
 		/// <summary>
 		/// Gets/sets the options
@@ -895,6 +896,7 @@ namespace dnlib.DotNet {
 			this.options = options;
 			this.genericArguments = null;
 			this.sourceModule = sourceModule;
+            this.compareWinRT = new WinRT.SigComparer();
 		}
 
 		/// <summary>
@@ -2096,6 +2098,10 @@ namespace dnlib.DotNet {
 			if (!recursionCounter.Increment())
 				return false;
 			bool result;
+
+            // Check WinRT types
+            if (compareWinRT.Equals(a, b))
+                return true;
 
 			if (a.ElementType != b.ElementType) {
 				// Signatures must be identical. It's possible to have a U4 in a sig (short form

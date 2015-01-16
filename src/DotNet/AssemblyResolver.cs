@@ -21,7 +21,7 @@ namespace dnlib.DotNet {
 		static readonly ModuleDef nullModule = new ModuleDefUser();
 
 		// DLL files are searched before EXE files
-		static readonly IList<string> assemblyExtensions = new string[] { ".dll", ".exe" };
+		static readonly IList<string> assemblyExtensions = new string[] { ".dll", ".exe", ".winmd" };
 
 		static readonly GacInfo gac2Info;	// .NET 1.x and 2.x
 		static readonly GacInfo gac4Info;	// .NET 4.x
