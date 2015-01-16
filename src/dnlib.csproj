@@ -323,6 +323,7 @@
     <Compile Include="W32Resources\ResourceDirectoryEntry.cs" />
     <Compile Include="W32Resources\ResourceName.cs" />
     <Compile Include="W32Resources\Win32Resources.cs" />
+    <Compile Include="WinRT\SigComparer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
